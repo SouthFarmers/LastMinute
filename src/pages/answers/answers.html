@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar >
+    <ion-title>Answers</ion-title>
+    <ion-buttons end>
+      <button ion-button right (click)="openFilter()">
+        <ion-icon name="funnel"></ion-icon>
+      </button>
+      <button ion-button right  (click)="addAnswerModal()">
+        <ion-icon name="create"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-item-group>
+    <ion-item-divider color="light">{{question}}</ion-item-divider>
+    <ion-list >
+      <button ion-item *ngFor="let answer of answers"  detail-none>
+        <ion-item>
+        {{ answer.answer }}
+        </ion-item>
+        <div class="item-note" item-right>
+          <button (click)="like(answer)">
+            <ion-icon name="thumbs-up"></ion-icon>
+          </button>
+          <ion-badge item-right>{{answer.upvotes}}</ion-badge>
+        </div>
+      </button>
+    </ion-list>
+  </ion-item-group>
+</ion-content>

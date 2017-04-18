@@ -1,0 +1,57 @@
+<ion-header no-border>
+  <ion-navbar>
+    <ion-buttons end *ngIf="showSkip">
+      <button ion-button (click)="startApp()" color="primary">Skip</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content no-bounce>
+  <ion-slides #slides (ionSlideWillChange)="onSlideChangeStart($event)" pager>
+
+    <ion-slide>
+      <img src="assets/img/slide1.png" class="slide-image"/>
+      <h2 class="slide-title">
+        Welcome to <b>Last Minute</b>
+      </h2>
+      <p>
+        The <b>Last Minute</b> helps you to continue your exam preparation untill Last Minute..
+      </p>
+    </ion-slide>
+
+    <ion-slide>
+      <img src="assets/img/slide2.png" class="slide-image"/>
+      <h2 class="slide-title" >How it works?</h2>
+      <p>Select your Year/Sem and then subject, we will give you imporatant questions to prepare in Last Minute</p>
+    </ion-slide>
+
+    <ion-slide>
+      <img src="assets/img/slide3.png" class="slide-image"/>
+      <h2 class="slide-title">How to add new question?</h2>
+      <p>Click on '+' sign and add your question, simple!</p>
+    </ion-slide>
+
+    <ion-slide>
+      <img src="assets/img/slide4.png" class="slide-image"/>
+      <h2 class="slide-title">Ready to Play?</h2>
+      <ion-item>
+        <ion-label>Select your semester:</ion-label>
+        <ion-select [(ngModel)]="sem">
+          <ion-option value="oneone">1st year</ion-option>
+          <ion-option value="twoone">2nd Year 1st sem</ion-option>
+          <ion-option value="twotwo">2nd Year 2nd sem</ion-option>
+          <ion-option value="threeone">3rd Year 1st sem</ion-option>
+          <ion-option value="threetwo">3rd Year 2nd sem</ion-option>
+          <ion-option value="fourone">4th Year 1st sem</ion-option>
+          <ion-option value="fourtwo">4th Year 2nd sem</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <button ion-button icon-right large clear (click)="startApp()">
+        Continue
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-slide>
+
+  </ion-slides>
+</ion-content>

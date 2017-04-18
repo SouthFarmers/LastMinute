@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row *ngFor="let i of rows">
+      <ion-col *ngFor="let subject of subjects | slice:(i*2):(i+1)*2" width-66 (click)="getChaptersList($event, subject)">
+        <ion-card>
+          <img src="http://placehold.it/300x300" />
+          <ion-card-content>
+            <ion-card-title>
+              {{subject.Subject}}
+            </ion-card-title>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

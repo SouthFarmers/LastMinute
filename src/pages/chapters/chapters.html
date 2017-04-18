@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar no-border-bottom>
+    <ion-title>
+      Chapters
+    </ion-title>
+  </ion-navbar>
+
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="chapterssegment">
+      <ion-segment-button value="chapters">
+        Chapters
+      </ion-segment-button>
+      <ion-segment-button value="allq">
+        All Questions
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div [ngSwitch]="chapterssegment">
+    <ion-list *ngSwitchCase="'chapters'">
+      <button ion-item *ngFor="let chapter of chapters" (click)="chapterTapped(chapter)">
+        {{ chapter.title }}
+      </button>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'allq'">
+      <button ion-item *ngFor="let question of questions" (click)="questionTapped(question)">
+        {{ question.question }}
+        <div class="item-note" item-right>
+          {{question.importance}}/10
+        </div>
+      </button>
+    </ion-list>
+  </div>
+</ion-content>
