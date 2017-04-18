@@ -3,6 +3,7 @@ import {NavController, NavParams} from 'ionic-angular';
 import {Backand} from "../../providers/backand";
 import {ICategory} from "../../model/category";
 import {ChaptersPage} from "../chapters/chapters";
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'page-home',
@@ -13,12 +14,21 @@ export class HomePage {
   subjects: ICategory[];
   rows: any;
   sem:any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private backand: Backand) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private backand: Backand, private storage:Storage) {
     this.sem = navParams.get('sem');
+    if(this.sem == undefined){
+      this.storage.get('semester')
+        .then((semester) => {
+          this.sem = semester;
+          this.getSubjects();
+        });
+    }else{
+      this.getSubjects();
+    }
   }
 
   ionViewDidLoad() {
-    this.getSubjects();
+
   }
 
   getChaptersList(event, item) {

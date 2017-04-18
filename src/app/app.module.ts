@@ -18,6 +18,7 @@ import {QuestionsPage} from "../pages/questions/questions";
 import {AnswersPage} from "../pages/answers/answers";
 import {Modalanswer} from "../pages/modalanswer/modalanswer";
 import {Modalquestion} from "../pages/modalquestion/modalquestion";
+import {Elastic} from "../pages/questions/elastic";
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {Modalquestion} from "../pages/modalquestion/modalquestion";
     QuestionsPage,
     AnswersPage,
     Modalanswer,
-    Modalquestion
+    Modalquestion,
+    Elastic
   ],
   imports: [
     BrowserModule,

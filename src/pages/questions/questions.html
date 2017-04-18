@@ -22,12 +22,25 @@
 <ion-content padding>
 
   <ion-list >
-    <button ion-item *ngFor="let question of questions" (click)="questionSelected(question)">
-      {{ question.question }}
-      <div class="item-note" item-right>
-        {{question.importance}}/10
-      </div>
-    </button>
+    <ion-item text-wrap *ngFor="let question of questions" (click)="questionSelected(question)">
+
+      <ion-item-divider no-lines color="light">{{ question.question }}</ion-item-divider>
+
+
+      <ion-row>
+        <ion-col>
+        </ion-col>
+        <ion-col>
+        </ion-col>
+        <ion-col center text-center>
+          <ion-note>
+            {{question.importance}}/10
+          </ion-note>
+        </ion-col>
+      </ion-row>
+
+
+    </ion-item>
   </ion-list>
 
 </ion-content>

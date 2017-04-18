@@ -95,20 +95,22 @@ export class AnswersPage {
     let modal = this.modalCtrl.create(Modalanswer, {question: this.question});
     modal.present();
     modal.onDidDismiss(data=>{
-    this.backand.addAnswersP(this.qid,data)
-      .subscribe(
-        data => {
-          let toast = this.toastCtrl.create({
-            message: 'Answer Added!',
-            duration: 3000,
-            position: 'bottom'
-          });
+      if(data != undefined) {
+        this.backand.addAnswersP(this.qid, data)
+          .subscribe(
+            data => {
+              let toast = this.toastCtrl.create({
+                message: 'Answer Added!',
+                duration: 3000,
+                position: 'bottom'
+              });
 
-          toast.present(toast);
-          this.getAnswers();
-        },
-        err => this.logError(err)
-      );
+              toast.present(toast);
+              this.getAnswers();
+            },
+            err => this.logError(err)
+          );
+      }
     })
 
   }

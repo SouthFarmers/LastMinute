@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {NavController, NavParams, ViewController, Platform, ModalController, ToastController} from 'ionic-angular';
+import {NavController, NavParams, ModalController, ToastController} from 'ionic-angular';
 import {Backand} from "../../providers/backand";
 import {AnswersPage} from "../answers/answers";
 import {Modalquestion} from "../modalquestion/modalquestion";
@@ -58,6 +58,7 @@ export class QuestionsPage {
     let modal = this.modalCtrl.create(Modalquestion);
     modal.present();
     modal.onDidDismiss(data=>{
+      if(data != undefined){
       this.backand.addQuestionP(data, this.chapter,this.subject)
         .subscribe(
           data => {
@@ -72,6 +73,7 @@ export class QuestionsPage {
           },
           err => this.logError(err)
         );
+      }
     })
   }
 

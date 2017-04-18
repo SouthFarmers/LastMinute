@@ -28,6 +28,7 @@ export class TutorialPage {
       sem:this.sem
     }).then(() => {
       this.storage.set('hasSeenTutorial', 'true');
+      this.storage.set('semester', this.sem);
     })
   }
 

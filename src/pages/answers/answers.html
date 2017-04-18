@@ -14,19 +14,29 @@
 
 
 <ion-content padding>
-  <ion-item-group>
+  <ion-item-group text-wrap>
     <ion-item-divider color="light">{{question}}</ion-item-divider>
     <ion-list >
       <button ion-item *ngFor="let answer of answers"  detail-none>
-        <ion-item>
+        <ion-item no-lines>
         {{ answer.answer }}
         </ion-item>
-        <div class="item-note" item-right>
-          <button (click)="like(answer)">
-            <ion-icon name="thumbs-up"></ion-icon>
-          </button>
-          <ion-badge item-right>{{answer.upvotes}}</ion-badge>
-        </div>
+
+        <ion-row>
+          <ion-col>
+          </ion-col>
+          <ion-col>
+          </ion-col>
+          <ion-col center text-center>
+            <ion-note>
+              <button ion-button icon-left clear medium (click)="like(answer)">
+                <ion-icon name="thumbs-up"><ion-badge item-right>{{answer.upvotes}}</ion-badge></ion-icon>
+              </button>
+
+            </ion-note>
+          </ion-col>
+        </ion-row>
+
       </button>
     </ion-list>
   </ion-item-group>

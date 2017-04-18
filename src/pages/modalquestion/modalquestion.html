@@ -24,6 +24,17 @@
 
   <ion-item text-wrap>
     <ion-label stacked>Enter your question</ion-label>
-    <ion-input type="text" [(ngModel)]="ques"></ion-input>
+    <ion-textarea elastic type="text" [(ngModel)]="ques"></ion-textarea>
   </ion-item>
+  <ion-item *ngFor="let image of images">
+    <img [src]="image.title" *ngIf="image" />
+  </ion-item>
+
 </ion-content>
+
+
+<ion-footer>
+  <ion-toolbar>
+    <button ion-button color="light"  block (click)="openImageMenu()">Attach Image</button>
+  </ion-toolbar>
+</ion-footer>

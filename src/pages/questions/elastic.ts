@@ -1,0 +1,10 @@
+import {HostListener, Directive} from '@angular/core';
+@Directive({
+  selector: '[elastic]'
+})
+export class Elastic {
+  @HostListener('input',['$event.target'])
+  onInput(nativeElement: any): void {
+    nativeElement.style.height = nativeElement.scrollHeight + "px";
+  }
+}
