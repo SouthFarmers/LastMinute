@@ -74,7 +74,24 @@ export class Backand {
   }
 
   public addQuestionP(question, chapterid,subjectid) {
+
     return this.http.get(this.api_url + '/1/query/data/AddQuestion?parameters=%7B%22question%22:%22%5C%22'+question+'%5C%22%22,%22chapterid%22:%22'+chapterid+'%22,%22subjectid%22:%22'+subjectid+'%22%7D', {
+      headers: this.authHeader()
+    })
+      .map(res => res.json())
+  }
+
+  public uploadQuestionImageP(ansid,ansimage) {
+
+    return this.http.get(this.api_url + '/1/query/data/AddAnswerImage?parameters=%7B%22ansid%22:%22'+ansid+'%22,%22answerimagedata%22:%22%5C%22'+ansimage+'%5C%22%22%7D', {
+      headers: this.authHeader()
+    })
+      .map(res => res.json())
+  }
+
+  public uploadAnswerImageP(qid,qimage) {
+
+    return this.http.get(this.api_url + '/1/query/data/AddQuestionImage?parameters=%7B%22qid%22:%22'+qid+'%22,%22imagedata%22:%22%5C%22'+qimage+'%5C%22%22%7D', {
       headers: this.authHeader()
     })
       .map(res => res.json())

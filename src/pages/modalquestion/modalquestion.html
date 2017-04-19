@@ -27,7 +27,7 @@
     <ion-textarea elastic type="text" [(ngModel)]="ques"></ion-textarea>
   </ion-item>
   <ion-item *ngFor="let image of images">
-    <img [src]="image.title" *ngIf="image" />
+    <img [src]="image" *ngIf="image" />
   </ion-item>
 
 </ion-content>

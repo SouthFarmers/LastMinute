@@ -24,7 +24,7 @@ export class MyApp {
     this.storage.get('hasSeenTutorial')
       .then((hasSeenTutorial) => {
         if (hasSeenTutorial) {
-          this.rootPage = HomePage;
+          this.rootPage = TutorialPage;
         } else {
           this.rootPage = TutorialPage;
         }

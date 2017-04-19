@@ -62,6 +62,7 @@ export class QuestionsPage {
       this.backand.addQuestionP(data, this.chapter,this.subject)
         .subscribe(
           data => {
+            console.log(data[0].id)
             let toast = this.toastCtrl.create({
               message: 'Question Added!',
               duration: 3000,
