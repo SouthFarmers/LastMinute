@@ -39,6 +39,17 @@
         </ion-col>
       </ion-row>
 
+      <ion-item *ngIf="question.images">
+        <ion-grid>
+          <ion-row *ngFor="let i of rows">
+            <ion-col *ngFor="let image of question.images | slice:(i*2):(i+1)*2" width-66 >
+              <ion-card>
+                <img [src]="image.imagedata"  />
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
 
     </ion-item>
   </ion-list>

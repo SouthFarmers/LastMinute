@@ -20,12 +20,14 @@ export class QuestionsPage {
   chapter;any;
   subject:any;
   questions :any;
+  rows:any;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private backand:Backand,
               public modalCtrl: ModalController,
               public toastCtrl: ToastController) {
+    this.rows = Array.from(Array(Math.ceil(4/ 2)).keys());
     this.chapter = navParams.get('chapter');
     this.subject = navParams.get('subject');
     this.getChapterQuestions();
@@ -41,6 +43,23 @@ export class QuestionsPage {
         data => {
           this.questions = [];
           this.questions = data;
+          for(let j = 0; j < this.questions.length; j++){
+
+            this.backand.getQuestionImageP(this.questions[j].id)
+              .subscribe(
+                data2 => {
+                    this.questions[j].images = data2;
+
+
+                  if(j == this.questions.length-1){
+
+                    console.log(this.questions)
+                  }
+                },
+                err => this.logError(err)
+              );
+          }
+
         },
         err => this.logError(err)
       );
@@ -58,19 +77,43 @@ export class QuestionsPage {
     let modal = this.modalCtrl.create(Modalquestion);
     modal.present();
     modal.onDidDismiss(data=>{
-      if(data != undefined){
-      this.backand.addQuestionP(data, this.chapter,this.subject)
-        .subscribe(
-          data => {
-            console.log(data[0].id)
-            let toast = this.toastCtrl.create({
-              message: 'Question Added!',
-              duration: 3000,
-              position: 'bottom'
-            });
 
-            toast.present(toast);
-            this.getChapterQuestions();
+      if(data != undefined){
+      this.backand.addQuestionP(data.ques, this.chapter,this.subject)
+        .subscribe(
+          data2 => {
+
+            if(data.img.length > 0) {
+              for (let i = 0; i < data.img.length; i++) {
+                this.backand.uploadQuestionImageP(data2[0].id, data.img[i])
+                  .subscribe(
+                    data3 => {
+
+                      if(i == data.img.length-1) {
+                        let toast = this.toastCtrl.create({
+                          message: 'Question Added!',
+                          duration: 3000,
+                          position: 'bottom'
+                        });
+
+                        toast.present(toast);
+                        this.getChapterQuestions();
+                      }
+
+                    },
+                    err => this.logError(err)
+                  );
+              }
+            }else{
+              let toast = this.toastCtrl.create({
+                message: 'Question Added!',
+                duration: 3000,
+                position: 'bottom'
+              });
+
+              toast.present(toast);
+              this.getChapterQuestions();
+            }
           },
           err => this.logError(err)
         );
@@ -80,6 +123,21 @@ export class QuestionsPage {
 
   public logError(err: TemplateStringsArray) {
     console.error('Error: ' + err);
+  }
+
+
+  encodeImageUri(imageUri) {
+    let c=document.createElement('canvas');
+    let ctx=c.getContext("2d");
+    let img=new Image();
+    img.onload = function(){
+      c.width=img.width;
+      c.height=img.height;
+      ctx.drawImage(img, 0,0);
+    };
+    img.src=imageUri;
+    let dataURL = c.toDataURL("image/jpeg");
+    return dataURL;
   }
 }
 

@@ -81,7 +81,7 @@ export class Backand {
       .map(res => res.json())
   }
 
-  public uploadQuestionImageP(ansid,ansimage) {
+  public uploadAnswerImageP(ansid,ansimage) {
 
     return this.http.get(this.api_url + '/1/query/data/AddAnswerImage?parameters=%7B%22ansid%22:%22'+ansid+'%22,%22answerimagedata%22:%22%5C%22'+ansimage+'%5C%22%22%7D', {
       headers: this.authHeader()
@@ -89,13 +89,24 @@ export class Backand {
       .map(res => res.json())
   }
 
-  public uploadAnswerImageP(qid,qimage) {
+  public uploadQuestionImageP(qid,imagedata) {
 
-    return this.http.get(this.api_url + '/1/query/data/AddQuestionImage?parameters=%7B%22qid%22:%22'+qid+'%22,%22imagedata%22:%22%5C%22'+qimage+'%5C%22%22%7D', {
+    let data = JSON.stringify({
+      imagedata: imagedata,
+      qid: qid
+    });
+    return this.http.post(this.api_url + '/1/objects/QuestionImages', data, {headers: this.authHeader()})
+      .map(res => res.json())
+  }
+
+  public getQuestionImageP(qid) {
+
+    return this.http.get(this.api_url + '/1/query/data/GetQuestionImages?parameters=%7B%22qid%22:%22'+qid+'%22%7D', {
       headers: this.authHeader()
     })
       .map(res => res.json())
   }
+
 
   catchError(error:Response){
     return Observable.throw(error.json().error || 'Server error');

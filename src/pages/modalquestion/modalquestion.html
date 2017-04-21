@@ -21,13 +21,22 @@
 
 <ion-content>
 
-
   <ion-item text-wrap>
     <ion-label stacked>Enter your question</ion-label>
     <ion-textarea elastic type="text" [(ngModel)]="ques"></ion-textarea>
   </ion-item>
-  <ion-item *ngFor="let image of images">
-    <img [src]="image" *ngIf="image" />
+
+
+  <ion-item *ngIf="images">
+    <ion-grid>
+      <ion-row *ngFor="let i of rows">
+        <ion-col *ngFor="let image of images | slice:(i*2):(i+1)*2" width-66 >
+          <ion-card>
+            <img [src]="image"  />
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-item>
 
 </ion-content>

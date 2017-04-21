@@ -28,7 +28,6 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-
   }
 
   getChaptersList(event, item) {
