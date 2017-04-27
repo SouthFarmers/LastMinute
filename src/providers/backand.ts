@@ -73,9 +73,17 @@ export class Backand {
       .map(res => res.json())
   }
 
-  public addQuestionP(question, chapterid,subjectid) {
+  public addQuestionP(question, chapterid, subjectid) {
 
     return this.http.get(this.api_url + '/1/query/data/AddQuestion?parameters=%7B%22question%22:%22%5C%22'+question+'%5C%22%22,%22chapterid%22:%22'+chapterid+'%22,%22subjectid%22:%22'+subjectid+'%22%7D', {
+      headers: this.authHeader()
+    })
+      .map(res => res.json())
+  }
+
+  public addQuestionTag(qid, tag) {
+
+    return this.http.get(this.api_url + '/1/query/data/AddTag?parameters=%7B%22qid%22:%22'+qid+'%22,%22tag%22:%22'+tag+'%22%7D', {
       headers: this.authHeader()
     })
       .map(res => res.json())
@@ -107,13 +115,17 @@ export class Backand {
       .map(res => res.json())
   }
 
+  public getQuestionTags(qid) {
+// https://api.backand.com/1/query/data/getTags?parameters=%7B%22qid%22:%221%22%7D
+    return this.http.get(this.api_url + '/1/query/data/getTags?parameters=%7B%22qid%22:%22'+qid+'%22%7D', {
+      headers: this.authHeader()
+    })
+      .map(res => res.json())
+  }
+
 
   catchError(error:Response){
     return Observable.throw(error.json().error || 'Server error');
   }
 
 }
-
-
-
-

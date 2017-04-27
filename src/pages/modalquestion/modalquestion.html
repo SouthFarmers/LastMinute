@@ -26,6 +26,11 @@
     <ion-textarea elastic type="text" [(ngModel)]="ques"></ion-textarea>
   </ion-item>
 
+  <ion-item text-wrap>
+    <ion-label stacked>Tag this question with topics</ion-label>
+    <ion-textarea elastic type="text" [(ngModel)]="tags"></ion-textarea>
+  </ion-item>
+
 
   <ion-item *ngIf="images">
     <ion-grid>

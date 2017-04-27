@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavParams, Platform, ViewController,ActionSheetController} from 'ionic-angular';
-import {Camera} from 'ionic-native';
-import { ImagePicker } from 'ionic-native';
+import {Camera} from '@ionic-native/camera';
+import { ImagePicker } from '@ionic-native/image-picker';
 import {Backand} from "../../providers/backand";
 
 
@@ -16,6 +16,9 @@ export class Modalquestion {
   images: any;
   data:any;
   rows: any;
+  imagepicker: ImagePicker;
+  camera: Camera;
+  tags: any;
 
   constructor(
     public platform: Platform,
@@ -34,7 +37,8 @@ export class Modalquestion {
   save(){
     this.data = {
       ques: this.ques,
-      img : this.images
+      img : this.images,
+      tags: this.tags
     }
     this.viewCtrl.dismiss(this.data);
   }
@@ -42,13 +46,13 @@ export class Modalquestion {
 
   takePicture(){
     let options = {
-      destinationType: Camera.DestinationType.DATA_URL,
-      sourceType: Camera.PictureSourceType.CAMERA,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      sourceType: this.camera.PictureSourceType.CAMERA,
       targetWidth: 500,
       targetHeight: 500
     }
 
-    Camera.getPicture(options).then((imageData) => {
+    this.camera.getPicture(options).then((imageData) => {
       this.images.push("data:image/jpeg;base64," + imageData);
     }, (err) => {
       console.log(err);
@@ -66,7 +70,7 @@ export class Modalquestion {
       outputType: 1
     }
 
-    ImagePicker.getPictures(options).then(
+    this.imagepicker.getPictures(options).then(
       file_uris => {
 
         for (var i = 0; i < file_uris.length; i++) {

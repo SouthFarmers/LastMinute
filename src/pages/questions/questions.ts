@@ -21,6 +21,7 @@ export class QuestionsPage {
   subject:any;
   questions :any;
   rows:any;
+  tags: any;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -38,12 +39,25 @@ export class QuestionsPage {
   }
 
   private getChapterQuestions() {
+    var tagstring: any;
     this.backand.getChapterQuestionsP(this.chapter,this.subject)
       .subscribe(
         data => {
           this.questions = [];
           this.questions = data;
-          for(let j = 0; j < this.questions.length; j++){
+          for(let j = 0; j < this.questions.length; j++)
+          {
+            this.backand.getQuestionTags(this.questions[j].id)
+              .subscribe(
+                data => {
+                  tagstring = "";
+                  for(let k = 0; k < data.length; k++){
+                    tagstring += data[k].tag + " ";
+                  }
+                  this.tags="";
+                  this.tags=tagstring;
+                  this.questions[j].tags = tagstring;
+                })
 
             this.backand.getQuestionImageP(this.questions[j].id)
               .subscribe(
@@ -58,6 +72,8 @@ export class QuestionsPage {
                 },
                 err => this.logError(err)
               );
+            //this.getQuestionTags(this.questions[j].qid);
+
           }
 
         },
@@ -82,6 +98,9 @@ export class QuestionsPage {
       this.backand.addQuestionP(data.ques, this.chapter,this.subject)
         .subscribe(
           data2 => {
+            this.backand.addQuestionTag(data2[0].id, data.tags)
+              .subscribe(
+                somedata => {});
 
             if(data.img.length > 0) {
               for (let i = 0; i < data.img.length; i++) {
@@ -115,8 +134,11 @@ export class QuestionsPage {
               this.getChapterQuestions();
             }
           },
+
           err => this.logError(err)
         );
+
+
       }
     })
   }
@@ -140,4 +162,3 @@ export class QuestionsPage {
     return dataURL;
   }
 }
-
