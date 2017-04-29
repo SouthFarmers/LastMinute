@@ -21,24 +21,29 @@
 
 <ion-content padding>
 
+  <ion-searchbar (ionInput)="searchQuestion($event)"></ion-searchbar>
+
   <ion-list >
     <ion-item text-wrap *ngFor="let question of questions" (click)="questionSelected(question)">
 
       <ion-item-divider no-lines color="light">{{ question.question }}</ion-item-divider>
 
 
+      <ion-row *ngIf="question.tags">
+          <ion-note *ngFor="let tag of question.tags" class="tagnote">
+            <ion-badge class="tagbadge" >{{tag.tag}}</ion-badge>
+          </ion-note>
+      </ion-row>
+
       <ion-row>
         <ion-col>
-          <ion-note>
-            {{question.tags}}
-          </ion-note>
         </ion-col>
         <ion-col>
         </ion-col>
         <ion-col center text-center>
-          <ion-note>
-            {{question.importance}}/10
-          </ion-note>
+        <ion-note>
+        {{question.importance}}/10
+        </ion-note>
         </ion-col>
       </ion-row>
 

@@ -3,6 +3,7 @@ import {NavController, NavParams} from 'ionic-angular';
 import {Backand} from "../../providers/backand";
 import {QuestionsPage} from "../questions/questions";
 import {AnswersPage} from "../answers/answers";
+import {Loader} from "../../providers/loader";
 
 @Component({
   selector: 'page-chapters',
@@ -15,9 +16,12 @@ export class ChaptersPage {
   questions :any;
   subjectid:any=1;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private backand : Backand) {
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              private backand : Backand,
+              public loader : Loader) {
+    this.loader.presentLoading();
     this.subjectid = navParams.get('subject');
-
     this.chapters = [];
     for (let i = 1; i < 9; i++) {
       this.chapters.push({
@@ -35,6 +39,7 @@ export class ChaptersPage {
         data => {
           this.questions = [];
           this.questions = data;
+          this.loader.stopLoading();
         },
         err => this.logError(err)
       );

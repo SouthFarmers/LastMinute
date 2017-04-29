@@ -1,11 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import {Nav, Platform} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import {TutorialPage} from "../pages/tutorial/tutorial";
+import {Loader} from "../providers/loader";
 
 @Component({
   templateUrl: 'app.html'
@@ -14,26 +14,31 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = TutorialPage;
-
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
-              public storage: Storage) {
+  constructor(public platform: Platform,
+              public statusBar: StatusBar,
+              public splashScreen: SplashScreen,
+              public storage: Storage,
+              public loader: Loader) {
+
+    this.loader.presentLoading();
     this.initializeApp();
 
     this.storage.get('hasSeenTutorial')
       .then((hasSeenTutorial) => {
         if (hasSeenTutorial) {
-          this.rootPage = TutorialPage;
+          this.rootPage = HomePage;
+          this.loader.stopLoading();
         } else {
           this.rootPage = TutorialPage;
+          this.loader.stopLoading();
         }
       });
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage }
+      { title: 'Home', component: HomePage }
     ];
 
   }
@@ -52,4 +57,5 @@ export class MyApp {
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
+
 }

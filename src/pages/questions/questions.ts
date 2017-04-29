@@ -3,6 +3,7 @@ import {NavController, NavParams, ModalController, ToastController} from 'ionic-
 import {Backand} from "../../providers/backand";
 import {AnswersPage} from "../answers/answers";
 import {Modalquestion} from "../modalquestion/modalquestion";
+import {Loader} from "../../providers/loader";
 
 /**
  * Generated class for the Questions page.
@@ -21,61 +22,49 @@ export class QuestionsPage {
   subject:any;
   questions :any;
   rows:any;
-  tags: any;
+  tempquestions:any;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private backand:Backand,
               public modalCtrl: ModalController,
-              public toastCtrl: ToastController) {
+              public toastCtrl: ToastController,
+              public loader : Loader) {
+    this.loader.presentLoading();
     this.rows = Array.from(Array(Math.ceil(4/ 2)).keys());
     this.chapter = navParams.get('chapter');
     this.subject = navParams.get('subject');
     this.getChapterQuestions();
   }
 
-  ionViewDidLoad() {
-
-  }
-
   private getChapterQuestions() {
-    var tagstring: any;
     this.backand.getChapterQuestionsP(this.chapter,this.subject)
       .subscribe(
         data => {
           this.questions = [];
+          this.tempquestions = [];
           this.questions = data;
+          this.tempquestions = data;
           for(let j = 0; j < this.questions.length; j++)
           {
             this.backand.getQuestionTags(this.questions[j].id)
               .subscribe(
                 data => {
-                  tagstring = "";
-                  for(let k = 0; k < data.length; k++){
-                    tagstring += data[k].tag + " ";
-                  }
-                  this.tags="";
-                  this.tags=tagstring;
-                  this.questions[j].tags = tagstring;
+                  this.questions[j].tags = data;
+                  this.tempquestions[j].tags = data;
                 })
 
             this.backand.getQuestionImageP(this.questions[j].id)
               .subscribe(
                 data2 => {
                     this.questions[j].images = data2;
-
-
-                  if(j == this.questions.length-1){
-
-                    console.log(this.questions)
-                  }
+                    this.tempquestions[j].images = data2;
+                    //console.log(this.questions);
+                    this.loader.stopLoading();
                 },
                 err => this.logError(err)
               );
-            //this.getQuestionTags(this.questions[j].qid);
-
           }
-
         },
         err => this.logError(err)
       );
@@ -143,22 +132,22 @@ export class QuestionsPage {
     })
   }
 
+  public searchQuestion(ev){
+
+    var val = ev.target.value;
+
+    if (val && val.trim() != '') {
+      this.questions = this.questions.question.filter((item) => {
+        return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+    }else {
+      this.questions = this.tempquestions;
+    }
+
+  }
+
   public logError(err: TemplateStringsArray) {
     console.error('Error: ' + err);
   }
 
-
-  encodeImageUri(imageUri) {
-    let c=document.createElement('canvas');
-    let ctx=c.getContext("2d");
-    let img=new Image();
-    img.onload = function(){
-      c.width=img.width;
-      c.height=img.height;
-      ctx.drawImage(img, 0,0);
-    };
-    img.src=imageUri;
-    let dataURL = c.toDataURL("image/jpeg");
-    return dataURL;
-  }
 }

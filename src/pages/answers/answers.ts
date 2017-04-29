@@ -5,13 +5,7 @@ import {
 } from 'ionic-angular';
 import {Backand} from "../../providers/backand";
 import {Modalanswer} from "../modalanswer/modalanswer";
-
-/**
- * Generated class for the Answers page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import {Loader} from "../../providers/loader";
 
 @Component({
   selector: 'page-answers',
@@ -31,13 +25,12 @@ export class AnswersPage {
               private backand:Backand,
               public alertCtrl: AlertController,
               public modalCtrl: ModalController,
-              public toastCtrl: ToastController) {
+              public toastCtrl: ToastController,
+              public loader : Loader) {
+    this.loader.presentLoading();
     this.qid = navParams.get('qid');
     this.question = navParams.get('question');
     this.getAnswers();
-  }
-
-  ionViewDidLoad() {
   }
 
   private getAnswers() {
@@ -46,6 +39,7 @@ export class AnswersPage {
         data => {
           this.answers = [];
           this.answers = data;
+          this.loader.stopLoading();
         },
         err => this.logError(err)
       );

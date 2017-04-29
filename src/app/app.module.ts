@@ -4,7 +4,6 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -19,12 +18,12 @@ import {AnswersPage} from "../pages/answers/answers";
 import {Modalanswer} from "../pages/modalanswer/modalanswer";
 import {Modalquestion} from "../pages/modalquestion/modalquestion";
 import {Elastic} from "../pages/questions/elastic";
+import {Loader} from "../providers/loader";
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage,
     TutorialPage,
     ChaptersPage,
     QuestionsPage,
@@ -43,7 +42,6 @@ import {Elastic} from "../pages/questions/elastic";
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage,
     TutorialPage,
     ChaptersPage,
     AnswersPage,
@@ -56,7 +54,8 @@ import {Elastic} from "../pages/questions/elastic";
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Backand,
-    CategoryService
+    CategoryService,
+    Loader
   ]
 })
 export class AppModule {}
