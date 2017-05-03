@@ -16,12 +16,14 @@
     </ion-buttons>
   </ion-navbar>
 
+  <ion-searchbar (ionInput)="searchQuestion($event)" placeholder="search..."></ion-searchbar>
+
 </ion-header>
 
 
-<ion-content padding>
+<ion-content >
 
-  <ion-searchbar (ionInput)="searchQuestion($event)"></ion-searchbar>
+
 
   <ion-list >
     <ion-item text-wrap *ngFor="let question of questions" (click)="questionSelected(question)">

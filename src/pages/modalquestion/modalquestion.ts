@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavParams, Platform, ViewController,ActionSheetController} from 'ionic-angular';
 import {Camera} from '@ionic-native/camera';
-import { ImagePicker } from '@ionic-native/image-picker';
+//import { ImagePicker } from '@ionic-native/image-picker';
 import {Backand} from "../../providers/backand";
 
 
@@ -16,7 +16,7 @@ export class Modalquestion {
   images: any;
   data:any;
   rows: any;
-  imagepicker: ImagePicker;
+  //imagepicker: ImagePicker;
   camera: Camera;
   tags: any;
 
@@ -70,25 +70,25 @@ export class Modalquestion {
       outputType: 1
     }
 
-    this.imagepicker.getPictures(options).then(
-      file_uris => {
-
-        for (var i = 0; i < file_uris.length; i++) {
-
-
-          this.convertToDataURLviaCanvas(file_uris[i], "image/jpg")
-            .then( base64Img => {
-              file_uris[i] = base64Img;
-              if(i == file_uris.length-1){
-                this.images = file_uris;
-              }
-              console.log(base64Img);
-            })
-        }
-          this.rows = Array.from(Array(Math.ceil(this.images.length / 2)).keys());
-      },
-      err => console.log('uh oh')
-    );
+    // this.imagepicker.getPictures(options).then(
+    //   file_uris => {
+    //
+    //     for (var i = 0; i < file_uris.length; i++) {
+    //
+    //
+    //       this.convertToDataURLviaCanvas(file_uris[i], "image/jpg")
+    //         .then( base64Img => {
+    //           file_uris[i] = base64Img;
+    //           if(i == file_uris.length-1){
+    //             this.images = file_uris;
+    //           }
+    //           console.log(base64Img);
+    //         })
+    //     }
+    //       this.rows = Array.from(Array(Math.ceil(this.images.length / 2)).keys());
+    //   },
+    //   err => console.log('uh oh')
+    // );
   }
 
   openImageMenu() {

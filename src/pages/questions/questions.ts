@@ -135,13 +135,12 @@ export class QuestionsPage {
   public searchQuestion(ev){
 
     var val = ev.target.value;
+    this.questions = this.tempquestions;
 
     if (val && val.trim() != '') {
-      this.questions = this.questions.question.filter((item) => {
-        return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      this.questions = this.questions.filter((item) => {
+        return (item.question.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
-    }else {
-      this.questions = this.tempquestions;
     }
 
   }

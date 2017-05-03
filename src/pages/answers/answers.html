@@ -13,11 +13,11 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
   <ion-item-group text-wrap>
     <ion-item-divider color="light">{{question}}</ion-item-divider>
     <ion-list >
-      <button ion-item *ngFor="let answer of answers"  detail-none>
+      <ion-item *ngFor="let answer of answers"  detail-none>
         <ion-item no-lines>
         {{ answer.answer }}
         </ion-item>
@@ -37,7 +37,7 @@
           </ion-col>
         </ion-row>
 
-      </button>
+      </ion-item>
     </ion-list>
   </ion-item-group>
 </ion-content>
