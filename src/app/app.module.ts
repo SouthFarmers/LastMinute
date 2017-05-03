@@ -34,7 +34,9 @@ import {Loader} from "../providers/loader";
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp,{
+      menuType: 'overlay',
+    }),
     HttpModule,
     IonicStorageModule.forRoot()
   ],
