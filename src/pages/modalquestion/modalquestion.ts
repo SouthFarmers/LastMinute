@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavParams, Platform, ViewController,ActionSheetController} from 'ionic-angular';
 import {Camera} from '@ionic-native/camera';
-//import { ImagePicker } from '@ionic-native/image-picker';
 import {Backand} from "../../providers/backand";
+//import {Camera} from "ionic-native";
 
 
 
@@ -16,14 +16,13 @@ export class Modalquestion {
   images: any;
   data:any;
   rows: any;
-  //imagepicker: ImagePicker;
-  camera: Camera;
   tags: any;
 
   constructor(
     public platform: Platform,
     public params: NavParams,
     public viewCtrl: ViewController,
+    public camera: Camera,
     public actionsheetCtrl: ActionSheetController,
     public backand: Backand) {
     this.images =[];
@@ -45,15 +44,16 @@ export class Modalquestion {
 
 
   takePicture(){
+
     let options = {
       destinationType: this.camera.DestinationType.DATA_URL,
-      sourceType: this.camera.PictureSourceType.CAMERA,
       targetWidth: 500,
       targetHeight: 500
     }
 
     this.camera.getPicture(options).then((imageData) => {
       this.images.push("data:image/jpeg;base64," + imageData);
+      console.log(this.images);
     }, (err) => {
       console.log(err);
     });
@@ -63,32 +63,17 @@ export class Modalquestion {
 
   getLibrary(){
     let options = {
-      maximumImagesCount: 4,
-      width: 500,
-      height: 500,
-      quality: 75,
-      outputType: 1
+      destinationType: this.camera.DestinationType.DATA_URL,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      targetWidth: 500,
+      targetHeight: 500
     }
 
-    // this.imagepicker.getPictures(options).then(
-    //   file_uris => {
-    //
-    //     for (var i = 0; i < file_uris.length; i++) {
-    //
-    //
-    //       this.convertToDataURLviaCanvas(file_uris[i], "image/jpg")
-    //         .then( base64Img => {
-    //           file_uris[i] = base64Img;
-    //           if(i == file_uris.length-1){
-    //             this.images = file_uris;
-    //           }
-    //           console.log(base64Img);
-    //         })
-    //     }
-    //       this.rows = Array.from(Array(Math.ceil(this.images.length / 2)).keys());
-    //   },
-    //   err => console.log('uh oh')
-    // );
+    this.camera.getPicture(options).then((imageData) => {
+      this.images.push("data:image/jpeg;base64," + imageData);
+    }, (err) => {
+      console.log(err);
+    });
   }
 
   openImageMenu() {

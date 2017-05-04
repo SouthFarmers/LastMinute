@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 
-import { MenuController, NavController, Slides } from 'ionic-angular';
+import {MenuController, NavController, Slides, Nav, App} from 'ionic-angular';
 
 import { Storage } from '@ionic/storage';
 import {HomePage} from "../home/home";
@@ -13,6 +13,7 @@ import {HomePage} from "../home/home";
 })
 
 export class TutorialPage {
+  @ViewChild(Nav) nav: Nav;
   showSkip = true;
   sem: string = "oneone";
   @ViewChild('slides') slides: Slides;
@@ -20,15 +21,14 @@ export class TutorialPage {
   constructor(
     public navCtrl: NavController,
     public menu: MenuController,
-    public storage: Storage
+    public storage: Storage,
+    public app: App
   ) { }
 
   startApp() {
-    this.navCtrl.push(HomePage,{
-      sem:this.sem
-    }).then(() => {
+    this.storage.set('semester', this.sem).then(() => {
       this.storage.set('hasSeenTutorial', 'true');
-      this.storage.set('semester', this.sem);
+      this.app.getRootNav().setRoot(HomePage);
     })
   }
 

@@ -21,16 +21,12 @@ export class HomePage {
               private storage:Storage,
               public loadingCtrl: LoadingController, public loader : Loader) {
     this.loader.presentLoading();
-    this.sem = navParams.get('sem');
-    if(this.sem == undefined){
+
       this.storage.get('semester')
         .then((semester) => {
           this.sem = semester;
           this.getSubjects();
         });
-    }else{
-      this.getSubjects();
-    }
   }
 
   getChaptersList(event, item) {

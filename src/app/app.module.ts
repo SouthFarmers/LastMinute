@@ -19,6 +19,11 @@ import {Modalanswer} from "../pages/modalanswer/modalanswer";
 import {Modalquestion} from "../pages/modalquestion/modalquestion";
 import {Elastic} from "../pages/questions/elastic";
 import {Loader} from "../providers/loader";
+import {AboutPage} from "../pages/about/about";
+import {SocialsharingPage} from "../pages/socialsharing/socialsharing";
+import {SocialSharing} from "ionic-native";
+import {Camera} from '@ionic-native/camera';
+import {SettingsPage} from "../pages/settings/settings";
 
 @NgModule({
   declarations: [
@@ -30,7 +35,10 @@ import {Loader} from "../providers/loader";
     AnswersPage,
     Modalanswer,
     Modalquestion,
-    Elastic
+    Elastic,
+    AboutPage,
+    SocialsharingPage,
+    SettingsPage
   ],
   imports: [
     BrowserModule,
@@ -49,7 +57,10 @@ import {Loader} from "../providers/loader";
     AnswersPage,
     QuestionsPage,
     Modalanswer,
-    Modalquestion
+    Modalquestion,
+    AboutPage,
+    SocialsharingPage,
+    SettingsPage
   ],
   providers: [
     StatusBar,
@@ -57,7 +68,9 @@ import {Loader} from "../providers/loader";
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Backand,
     CategoryService,
-    Loader
+    Loader,
+    SocialSharing,
+    Camera
   ]
 })
 export class AppModule {}

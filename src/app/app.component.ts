@@ -1,11 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
-import {Nav, Platform} from 'ionic-angular';
+import {Nav, Platform, ToastController, ModalController} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
 import { HomePage } from '../pages/home/home';
 import {TutorialPage} from "../pages/tutorial/tutorial";
 import {Loader} from "../providers/loader";
+import {AboutPage} from "../pages/about/about";
+import {SocialsharingPage} from "../pages/socialsharing/socialsharing";
+import {SettingsPage} from "../pages/settings/settings";
 
 @Component({
   templateUrl: 'app.html'
@@ -14,14 +17,24 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = TutorialPage;
-  pages: Array<{title: string, component: any}>;
+  usrimg:string = "assets/img/workingtitle.jpg";
+  UserGreet:string="Hello";
+  pages: Array<{title: string, component: any, icon:any}>;
 
   constructor(public platform: Platform,
               public statusBar: StatusBar,
               public splashScreen: SplashScreen,
+              public toastCtrl: ToastController,
+              public modalCtrl: ModalController,
               public storage: Storage,
               public loader: Loader) {
 
+    var time = new Date().getHours();
+    if (time < 12 && time > 0){this.UserGreet = "Good Morning"}
+    else if (time > 12 && time < 17){this.UserGreet = "Good Afternoon"}
+
+
+    else if (time > 17 && time < 23){this.UserGreet = "Good Evening"}
     this.loader.presentLoading();
     this.initializeApp();
 
@@ -38,7 +51,9 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage }
+      {title: 'About Us', component: AboutPage, icon: 'information-circle'},
+      {title: 'Rate US', component: '', icon: 'star-half'},
+      {title: 'Show Love', component: SocialsharingPage, icon: 'heart'}
     ];
 
   }
@@ -53,9 +68,27 @@ export class MyApp {
   }
 
   openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+    if(page.title == 'Rate US') {
+      let toast = this.toastCtrl.create({
+        message: 'This will goto App store/Play store after deployment',
+        duration: 4000,
+        position: 'bottom'
+      });
+      toast.present(toast);
+    }else if(page.title == 'Show Love') {
+      let modal = this.modalCtrl.create(SocialsharingPage);
+      modal.present();
+    }else{
+      this.nav.setRoot(page.component, {tabIndex: page.index});
+    }
   }
 
+  openTutorial() {
+    this.nav.setRoot(TutorialPage);
+  }
+
+  openSettings(){
+    let modal = this.modalCtrl.create(SettingsPage);
+    modal.present();
+  }
 }

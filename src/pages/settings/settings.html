@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons>
+    <button ion-button (click)="close()">
+      Close
+    </button>
+    </ion-buttons>
+    <ion-title>Settings</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="save()">
+        Save
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <ion-list-header>
+    </ion-list-header>
+    <ion-item>
+      <ion-label>Select your semester:</ion-label>
+      <ion-select [(ngModel)]="sem">
+        <ion-option value="oneone">1st year</ion-option>
+        <ion-option value="twoone">2nd Year 1st sem</ion-option>
+        <ion-option value="twotwo">2nd Year 2nd sem</ion-option>
+        <ion-option value="threeone">3rd Year 1st sem</ion-option>
+        <ion-option value="threetwo">3rd Year 2nd sem</ion-option>
+        <ion-option value="fourone">4th Year 1st sem</ion-option>
+        <ion-option value="fourtwo">4th Year 2nd sem</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+</ion-content>
